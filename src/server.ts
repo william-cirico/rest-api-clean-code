@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import { AppDataSource } from "./infra/database/typeorm";
 
 AppDataSource.initialize()
