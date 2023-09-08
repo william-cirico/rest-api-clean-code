@@ -5,3 +5,11 @@ export interface RegisterUserInput {
     cpf: string;
     phone: string;
 }
+
+export interface UserOutput {
+    id: number;
+    name: string;
+    email: string;
+    cpf: string;
+    phone: string;
+}

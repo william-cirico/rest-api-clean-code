@@ -1,9 +1,10 @@
-import { RegisterUserInput } from "../../usecases/register-user/input/register-user-input";
-import { IRegisterUser, RegisterUser } from "../../usecases/register-user/register-user";
+import { UserMapper } from "../../mappers/user-mapper";
+import { IRegisterUser } from "../../usecases/register-user";
 import { MissingParamError } from "./error/missing-param-error";
 import { Handler } from "./handler";
 import { badRequest, ok, serverError } from "./helpers/http-helper";
 import { HTTPRequest } from "./ports/http";
+import { RegisterUserInput } from "./ports/user";
 
 export class RegisterUserHandler implements Handler {
     private readonly registerUser: IRegisterUser;
@@ -32,9 +33,9 @@ export class RegisterUserHandler implements Handler {
             const { name, email, password, cpf, phone } = req.body;
             const registerUserInput: RegisterUserInput = { name, email, password, cpf, phone };
 
-            const registerUserOutput = await this.registerUser.exec(registerUserInput);
+            const registerUserOutput = await this.registerUser.exec(UserMapper.fromRegisterDTOToDomain(registerUserInput));
 
-            return ok(registerUserOutput);
+            return ok(UserMapper.fromDomainToDTO(registerUserOutput));
         } catch (error: any) {
             switch (error.name) {
                 case "InvalidPasswordError":

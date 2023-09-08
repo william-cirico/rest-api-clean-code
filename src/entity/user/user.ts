@@ -1,6 +1,5 @@
 import { cpf as CPFValidator } from "cpf-cnpj-validator";
 import { phone as phoneValidator } from "phone";
-import createError from "http-errors";
 import { InvalidCPFError } from "./error/invalid-cpf";
 import { InvalidPasswordError } from "./error/invalid-password";
 
@@ -16,12 +15,9 @@ export class User {
     public constructor(name: string, email: string, password: string, cpf: string, phone: string) {
         this.phone = phone;
         this.cpf = cpf;
-        this.id = User.counter + 1;
         this.password = password;
         this.name = name;
         this.email = email;
-
-        User.counter++;
     }
 
     public get password(): string {

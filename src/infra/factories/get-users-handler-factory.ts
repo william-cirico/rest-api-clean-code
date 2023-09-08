@@ -1,12 +1,10 @@
 import { GetUsersHandler } from "../../adapters/handler/get-users-handler";
-import { GetUsers } from "../../usecases/get-users/get-users";
-import database from "../database";
-import { UserMemoryRepository } from "../repository/user-memory-repository";
+import { GetUsers } from "../../usecases/get-users";
+import { UserTypeORMRepository } from "../repository/typeorm/user-repository";
 
 export function makeGetUsersHandlerFactory(): GetUsersHandler {
-    const userDatabase = database.users;
-    const userMemoryRepository = new UserMemoryRepository(userDatabase);
-    const getUsersUseCase = new GetUsers(userMemoryRepository);
+    const userRepository = new UserTypeORMRepository();
+    const getUsersUseCase = new GetUsers(userRepository);
     const getUsersHandler = new GetUsersHandler(getUsersUseCase);
 
     return getUsersHandler;
