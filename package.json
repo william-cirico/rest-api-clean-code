@@ -25,7 +25,7 @@
     "typescript": "^5.2.2"
   },
   "scripts": {
-    "start": "npm run dist/server.js",
+    "start": "node dist/server.js",
     "build": "npx tsup src/server.ts",
     "dev": "npx nodemon"
   },
