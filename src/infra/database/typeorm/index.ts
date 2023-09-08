@@ -7,7 +7,6 @@ export const AppDataSource = new DataSource({
     port: Number(process.env.DATABASE_PORT),
     username: process.env.DATABASE_USER,
     password: process.env.DATABASE_PASS,
-    database: "./database/database.sqlite",
     synchronize: true,
     logging: false,
     entities: [User],
