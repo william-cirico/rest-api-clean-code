@@ -1,4 +1,5 @@
 import "reflect-metadata";
+import "dotenv/config";
 import { AppDataSource } from "./infra/database/typeorm";
 
 AppDataSource.initialize()
