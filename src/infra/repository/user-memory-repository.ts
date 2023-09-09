@@ -13,8 +13,14 @@ export class UserMemoryRepository implements IUserRepository {
         return new Promise((resolve) => resolve(this.db));
     }
 
-    getUserById(id: number) {
-        return this.db.find((user: User) => user.id === id);
+    getUserById(id: number): Promise<User> {
+        return new Promise(resolve => {
+            const user = this.db.find((user: User) => user.id === id);
+
+            if (user) {
+                resolve(user);
+            }
+        });
     }
 
     getUserByUsernameAndPassword(username: string, password: string): Promise<User | undefined> {
@@ -31,12 +37,16 @@ export class UserMemoryRepository implements IUserRepository {
         return new Promise((resolve) => resolve(user));
     }
 
-    updateUser(updatedUser: User) {
-        const index = this.db.map((user: User) => user.id).indexOf(updatedUser.id);
+    updateUser(updatedUser: User): Promise<User> {
+        return new Promise(resolve => {
+            const index = this.db.map((user: User) => user.id).indexOf(updatedUser.id);
 
-        if (index !== -1) {
-            this.db[index] = updatedUser;
-        }
+            if (index !== -1) {
+                this.db[index] = updatedUser;
+            }
+
+            resolve(this.db[index]);
+        });
     }
 
     deleteUser(user: User) {
