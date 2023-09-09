@@ -8,20 +8,16 @@ export class User {
     public id: number;
     public name: string;
     public email: string;
-    private _password!: string;
-    private _cpf!: string;
-    private _phone!: string; 
-    static counter: number = 0;
+    private _password: string;
+    private _cpf: string;
+    private _phone: string;
 
     public constructor(name: string, email: string, password: string, cpf: string, phone: string) {
         this.phone = phone;
         this.cpf = cpf;
-        this.id = User.counter + 1;
         this.password = password;
         this.name = name;
         this.email = email;
-
-        User.counter++;
     }
 
     public get password(): string {

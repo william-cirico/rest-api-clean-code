@@ -3,6 +3,7 @@ import { IUserRepository } from "../../usecases/repository/user-repository";
 
 export class UserMemoryRepository implements IUserRepository {
     private db: User[];
+    static counter: number = 0;
 
     public constructor(db: any) {
         this.db = db;
@@ -16,7 +17,16 @@ export class UserMemoryRepository implements IUserRepository {
         return this.db.find((user: User) => user.id === id);
     }
 
+    getUserByUsernameAndPassword(username: string, password: string): Promise<User | undefined> {
+        return new Promise(resolve => {
+            const user = this.db.find(user => user.email === username && user.password === password);
+            resolve(user);
+        });
+    }
+
     insertUser(user: User): Promise<User> {
+        UserMemoryRepository.counter++;
+        user.id = UserMemoryRepository.counter;
         this.db.push(user);
         return new Promise((resolve) => resolve(user));
     }

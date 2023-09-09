@@ -1,4 +1,3 @@
-import { ServerError } from "../error/server-error";
 import { HTTPResponse } from "../ports/http";
 
 export function badRequest(error: Error): HTTPResponse {
@@ -30,7 +29,29 @@ export function noContent(): HTTPResponse {
 
 export function serverError(reason: string): HTTPResponse {
     return {
-        body: new ServerError(reason),
+        body: { error: reason },
         status: 500
     };
 }
+
+export function notAuthorized(message: string): HTTPResponse {
+    return {
+        body: { error: message },
+        status: 401
+    };
+}
+
+export function forbidden(message: string): HTTPResponse {
+    return {
+        body: { error: message },
+        status: 403
+    };
+}
+
+export function notFound(error: Error): HTTPResponse {
+    return {
+        body: { error: error.message },
+        status: 404
+    }
+}
+ 

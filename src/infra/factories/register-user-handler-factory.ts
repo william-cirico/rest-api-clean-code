@@ -1,12 +1,10 @@
 import { RegisterUserHandler } from "../../adapters/handler/register-user-handler";
 import { RegisterUser } from "../../usecases/register-user/register-user";
-import database from "../database";
-import { UserMemoryRepository } from "../repository/user-memory-repository";
+import { UserTypeORMRepository } from "../repository/user-typeorm-repository";
 
 export function makeRegisterUserHandlerFactory(): RegisterUserHandler {
-    const userDatabase = database.users;
-    const userMemoryRepository = new UserMemoryRepository(userDatabase);
-    const registerUserUseCase = new RegisterUser(userMemoryRepository);
+    const userTypeORMRepository = new UserTypeORMRepository();
+    const registerUserUseCase = new RegisterUser(userTypeORMRepository);
     const registerUserHandler = new RegisterUserHandler(registerUserUseCase);
 
     return registerUserHandler;
